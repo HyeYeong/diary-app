@@ -2,6 +2,7 @@
   "name": "daily-pieces",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://hyeyeong.github.io/daily-pieces",
   "scripts": {
     "dev": "next dev",
     "build": "next build && next export",
