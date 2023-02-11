@@ -1,0 +1,303 @@
+@charset "UTF-8";
+@use "sass:math";
+
+// -----------------------------
+//  @mixin
+//------------------------------
+
+@function floor-decimal($value, $decimal: 100) {
+  @return math.div(floor($value * $decimal), $decimal);
+}
+
+// svg icon
+@mixin icon-svg($left: "", $right: "", $w: 30, $image: "") {
+  @if $left != "" {
+    left: #{$left}px;
+  }
+
+  @if $right != "" {
+    right: #{$right}px;
+  }
+
+  width: #{$w}px;
+  height: #{$w}px;
+
+  @if $image != "" {
+    background-image: url(#{$path-cdn-common}#{$image});
+  }
+
+  background-size: #{$w}px #{$w}px;
+}
+
+// transition
+@mixin transition($property: opacity, $duration: 0.3, $ease: "") {
+  @if ($ease== "") {
+    transition: $property #{$duration}s;
+  } @else {
+    transition: $property #{$duration}s $ease;
+  }
+}
+
+// hover opacity
+@mixin hover-opacity($value: 0.5) {
+  opacity: 1;
+  @include transition;
+
+  @include hover {
+    opacity: $value;
+  }
+}
+
+// hover
+@mixin hover() {
+  .touchevents &.is-touched,
+  .no-touchevents &:hover {
+    @content;
+  }
+}
+
+// arrow
+@mixin arw-horizontal($dir: right, $w: 1, $color: $color-red) {
+  border-top: #{$w}px $color solid;
+  border-left: #{$w}px $color solid;
+
+  @if $dir==right {
+    transform: rotate(135deg);
+  } @else if $dir==left {
+    transform: rotate(-45deg);
+  } @else if $dir==top {
+    transform: rotate(45deg);
+  } @else if $dir==bottom {
+    transform: rotate(-135deg);
+  }
+}
+
+// arrow accordion
+@mixin arw-accordion($dir: bottom, $w: 6, $h: 5.5, $color: $color-red) {
+  width: 0;
+  height: 0;
+  border-style: solid;
+
+  @if $dir==bottom {
+    border-width: #{$w}px #{$h}px 0 #{$h}px;
+    border-color: $color transparent transparent transparent;
+  } @else if $dir==top {
+    border-width: 0 #{$h}px #{$w}px #{$h}px;
+    border-color: transparent transparent $color transparent;
+  }
+}
+
+@mixin replace($w: 0, $h: 0, $display: block, $position: left) {
+  display: #{$display};
+  overflow: hidden;
+
+  @if $w !=0 {
+    width: #{$w};
+    height: #{$h};
+  }
+
+  white-space: nowrap;
+  font-size: 0;
+  text-indent: 100%;
+
+  @if $position==center {
+    margin: auto;
+  }
+}
+
+@mixin pseudo(
+  $w: 0,
+  $h: 0,
+  $dir: left,
+  $top: 0,
+  $left: 0,
+  $bottom: 0,
+  $right: 0
+) {
+  content: "";
+  display: block;
+  position: absolute;
+  margin: auto;
+
+  @if $dir==left {
+    left: #{$left};
+    top: #{$top};
+    bottom: #{$bottom};
+  } @else if $dir==right {
+    right: #{$right};
+    top: #{$top};
+    bottom: #{$bottom};
+  } @else if $dir==center {
+    top: #{$top};
+    right: #{$right};
+    bottom: #{$bottom};
+    left: #{$left};
+  }
+
+  @if $w !=0 {
+    width: #{$w};
+    height: #{$h};
+  }
+}
+
+// media query
+@mixin mq-pc($bp-pc: #{$bp-pc}px) {
+  @media screen and (min-width: $bp-pc), print {
+    @content;
+  }
+}
+
+@mixin mq-sp($bp-sp: #{$bp-sp}px) {
+  @media screen and (max-width: $bp-sp) {
+    @content;
+  }
+}
+
+@mixin mq-sp-pt($bp-sp: #{$bp-sp}px) {
+  @media screen and (max-width: $bp-sp) and (orientation: portrait) {
+    @content;
+  }
+}
+
+@mixin mq-sp-ls($bp-sp: #{$bp-sp}px) {
+  @media screen and (max-width: $bp-sp) and (orientation: landscape) {
+    @content;
+  }
+}
+
+@mixin max-screen($break-point: #{$break-point}px) {
+  @media screen and (max-width: $break-point) {
+    @content;
+  }
+}
+
+@mixin min-screen($break-point: #{$break-point}px) {
+  @media screen and (min-width: $break-point) {
+    @content;
+  }
+}
+
+@mixin screen($break-point-min, $break-point-max) {
+  @media screen and (min-width: $break-point-min) and (max-width: $break-point-max) {
+    @content;
+  }
+}
+
+@mixin mq-mo($break-point2: #{$break-point2}px) {
+  @media screen and (max-width: $break-point2) {
+    @content;
+  }
+}
+
+// sprite sheet retina
+@mixin r-sprite-width($sprite) {
+  width: nth($sprite, 5) / 2;
+}
+
+@mixin r-sprite-height($sprite) {
+  height: nth($sprite, 6) / 2;
+}
+
+@mixin r-sprite-position($sprite) {
+  $sprite-offset-x: nth($sprite, 3) / 2;
+  $sprite-offset-y: nth($sprite, 4) / 2;
+  background-position: $sprite-offset-x $sprite-offset-y;
+}
+
+@mixin r-sprite-image($sprite) {
+  $sprite-image: nth($sprite, 9);
+  background-image: url(#{$sprite-image});
+}
+
+@mixin r-sprite-size($sprite) {
+  background-size: nth($sprite, 7) / 2 nth($sprite, 8) / 2;
+}
+
+@mixin r-sprite($sprite) {
+  @include r-sprite-image($sprite);
+  @include r-sprite-position($sprite);
+  @include r-sprite-width($sprite);
+  @include r-sprite-height($sprite);
+  @include r-sprite-size($sprite);
+}
+
+@mixin webkit-appearance($params) {
+  -webkit-appearance: $params;
+  -moz-appearance: $params;
+  appearance: $params;
+}
+
+@mixin row-align($params) {
+  -ms-grid-row-align: $params;
+  align-self: $params;
+}
+
+@mixin visually-hidden() {
+  position: absolute !important;
+  clip: rect(1px 1px 1px 1px);
+  /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 0 !important;
+  border: 0 !important;
+  height: 1px !important;
+  width: 1px !important;
+  overflow: hidden;
+}
+
+@function ls($value: 100) {
+  $tracking: math.div($value, 1000);
+  @return $tracking * 1em;
+}
+
+/* overflow clamp & overflow「...」処理 setting */
+@mixin ovf-clamp($num, $maxh) {
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  max-height: $maxh;
+  -webkit-line-clamp: $num;
+  -moz-line-clamp: $num;
+  -ms-line-clamp: $num;
+}
+
+/* 枠によってイメージサイズを拡大、切る */
+@mixin img-autosizing {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  -ms-transition-duration: 0.35s;
+  transition-duration: 0.35s;
+  -ms-transition-property: opacity, scale, -ms-transform, transform;
+  transition-property: opacity, scale, transform;
+  -ms-transform: scale(1);
+  transform: scale(1);
+  transform: translate(-50%, -50%);
+  backface-visibility: hidden;
+  object-fit: cover;
+}
+
+@mixin font-size($size: 12) {
+  $num: 0;
+  @if type-of($size) == "number" and not unitless($size) {
+    $num: math.div($size, ($size * 0 + 1));
+  }
+  font-size: $num + px;
+  font-size: math.div($num, 10) + rem;
+}
+
+@mixin ellipsis($row: 1) {
+  @if $row==1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  } @else {
+    display: -webkit-box;
+    overflow: hidden;
+    word-break: break-all;
+    -webkit-line-clamp: $row;
+    -webkit-box-orient: vertical;
+  }
+}
