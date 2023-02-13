@@ -57,7 +57,7 @@ const titleStyles = (element: string) => {
       return css`
         font-size: ${fontSize.h1};
         line-height: 3rem;
-        margin-top: 48px;
+        margin-top: 58px;
         margin-bottom: 24px;
 
         &:after {
@@ -75,14 +75,13 @@ const titleStyles = (element: string) => {
       return css`
         font-size: ${fontSize.h2};
         line-height: 2.6rem;
-        margin-top: 44px;
         margin-bottom: 22px;
       `;
     case "H3":
       return css`
         font-size: ${fontSize.h3};
         line-height: 2rem;
-        margin-top: 36px;
+        margin-top: 16px;
         margin-bottom: 18px;
       `;
     case "H4":
