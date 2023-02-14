@@ -28,7 +28,7 @@ export const DailyDataCard: FC<PropTypes> = ({ _css, item }) => {
 
 const styles = {
   wrap: css`
-    padding: 10px 15px 30px;
+    padding: 10px 15px 25px;
     border-radius: 10px;
     border: 1px solid ${COLORS.GRAY[1]};
     color: ${COLORS.BASECOLOR};

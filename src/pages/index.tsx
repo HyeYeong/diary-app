@@ -22,7 +22,7 @@ export default function Home() {
       </Head>
       <main css={styles.global}>
         <SearchDailyDatas keyword={keyword} setKeyword={setKeyword} />
-        <Centering>
+        <Centering _css={styles.mqCentering}>
           <div css={styles.mqWrap}>
             <AddNewDailyData />
             <DailyDatasList keyword={keyword} />
@@ -37,9 +37,21 @@ const styles = {
   global: css`
     font-family: "Noto Sans KR", "sans-serifui-monospace", "Menlo", "Monaco",
       "Cascadia Mono", "Segoe UI Mono";
+    margin: 0;
+    padding: 0;
+  `,
+  mqCentering: css`
+    margin: 0;
+
+    ${mediaQueries("md")} {
+      height: 100vh;
+      overflow: hidden;
+      margin-right: auto;
+      margin-left: auto;
+    }
   `,
   mqWrap: css`
-    margin-top: 57px;
+    margin-top: 70px;
     ${mediaQueries("md")} {
       display: flex;
       justify-content: space-between;

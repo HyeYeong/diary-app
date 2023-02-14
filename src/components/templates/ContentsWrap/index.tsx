@@ -32,8 +32,7 @@ const initialStyle = css`
   margin-bottom: 20px;
 
   ${mediaQueries("md")} {
-    margin-bottom: 30px;
-    padding-bottom: 20px;
+    margin: 0;
   }
 `;
 

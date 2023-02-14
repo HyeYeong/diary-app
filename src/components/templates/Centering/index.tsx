@@ -1,7 +1,7 @@
-import { mediaQueries } from '@/styles/mixins/MediaQueries';
-import { css, SerializedStyles } from '@emotion/react';
-import React, { ReactNode } from 'react';
-import type { NextPage } from 'next';
+import { mediaQueries } from "@/styles/mixins/MediaQueries";
+import { css, SerializedStyles } from "@emotion/react";
+import React, { ReactNode } from "react";
+import type { NextPage } from "next";
 
 interface PropsTypes {
   children: ReactNode;
@@ -17,7 +17,7 @@ const styles = {
     margin-right: 15px;
     margin-left: 15px;
 
-    ${mediaQueries('md')} {
+    ${mediaQueries("md")} {
       max-width: 1080px;
       width: 100%;
       margin-right: auto;
