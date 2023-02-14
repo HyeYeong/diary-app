@@ -20,16 +20,32 @@ export const AddNewDailyData: FC<PropTypes> = ({ _css }) => {
   const [inputError, setInputError] = useState(false);
   const [today] = useState(moment());
   const ERROR_MSG = "내용이 입력되지 않았습니다. 내용을 입력해주세요.";
-  const DEFAULT_REVIEW_DATA = {
+  const DEFAULT_REVIEW_DATA: DailyDataItemType = {
     id: nextId,
     title: "",
     comment: "",
+    sort: "todo",
     score: 0,
     date: today.format("YYYY/M/D"),
   };
 
   const [inputData, setInputData] =
     useState<DailyDataItemType>(DEFAULT_REVIEW_DATA);
+
+  const TAG_NAME = {
+    todo: "할일",
+    dairy: "일기",
+    memo: "메모",
+  } as const;
+
+  // TODO: 여기 정리
+  const [sortOptions] = useState<OptionType[]>(() => {
+    let arr = [];
+    arr.push({ label: "할일", value: "todo" });
+    arr.push({ label: "일기", value: "dairy" });
+    arr.push({ label: "메모", value: "memo" });
+    return arr;
+  });
 
   const [starScoreOptions] = useState<OptionType[]>(() => {
     let arr = [...Array(5)].map((_, index) => {
@@ -97,6 +113,17 @@ export const AddNewDailyData: FC<PropTypes> = ({ _css }) => {
           value={inputData.comment}
           name="comment"
           _css={styles.input}
+        />
+
+        <Title element="H4" _css={styles.subTitle}>
+          분류
+        </Title>
+        <Select
+          _css={styles.input}
+          onChange={handleChange}
+          value={inputData.sort}
+          name="sort"
+          selectOptions={sortOptions}
         />
 
         <Title element="H4" _css={styles.subTitle}>

@@ -4,6 +4,7 @@ import React, { FC } from "react";
 import { Title } from "@/components/atoms/Title";
 import { DailyDataItemType } from "@/helpers/common/DataTypes";
 import { Star } from "@/components/atoms/Star";
+import Tag from "@/components/atoms/Tag";
 
 interface PropTypes {
   item: DailyDataItemType;
@@ -11,16 +12,19 @@ interface PropTypes {
 }
 
 export const DailyDataCard: FC<PropTypes> = ({ _css, item }) => {
-  const { title, comment, score, date } = item;
+  const { title, comment, score, date, sort } = item;
 
+  //TODO: 데이터 삭제 및  수정 기능 추가하기
   return (
     <article css={[styles.wrap, _css]}>
       <Title element="H4" _css={styles.title}>
         {title}
       </Title>
       <p css={styles.comment}>{comment}</p>
-      <div></div>
-      <p css={styles.comment}>{date}</p>
+      <div css={styles.tagDateWrap}>
+        <Tag tag={sort} borderStyle={"solid"} />
+        <p css={styles.comment}>{date}</p>
+      </div>
       {score !== 0 && <Star score={score} />}
     </article>
   );
@@ -39,8 +43,12 @@ const styles = {
   title: css`
     margin-bottom: 10px;
   `,
+  tagDateWrap: css`
+    display: flex;
+  `,
   comment: css`
     font-size: 14px;
+    line-height: 14px;
     margin-bottom: 10px;
   `,
 };
