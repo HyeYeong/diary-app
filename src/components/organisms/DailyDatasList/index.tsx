@@ -2,6 +2,7 @@ import { css, SerializedStyles } from "@emotion/react";
 import React, { FC, useEffect, useState, useMemo } from "react";
 import { Title } from "@/components/atoms/Title";
 import ContentsWrap from "@/components/templates/ContentsWrap";
+import { CardCategories } from "@/components/molecules/CardCategories";
 import { DailyDataCard } from "@/components/molecules/DailyDataCard";
 import { useDailyDatas } from "@/helpers/hooks/useDailyDatas";
 import { DailyDataItemType } from "@/helpers/common/DataTypes";
@@ -61,6 +62,7 @@ export const DailyDatasList: FC<PropTypes> = ({ _css, keyword }) => {
         <Title element="H2" _css={styles.title}>
           그간의 기록들
         </Title>
+        <CardCategories />
         <section css={styles.cardsBlock}>
           {!isLoaded ? (
             <>지금까지의 일기를 불러오고 있습니다.</>
@@ -111,7 +113,7 @@ const styles = {
   cardsBlock: css`
     ${mediaQueries("md")} {
       overflow-y: scroll;
-      height: calc(100vh - 200px);
+      height: calc(100vh - 240px);
       padding: 8px;
     }
   `,
