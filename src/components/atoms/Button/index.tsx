@@ -1,13 +1,13 @@
 import { COLORS } from "@/styles/variables/Colors";
 import { css, SerializedStyles } from "@emotion/react";
-import React, { FC, ReactNode, MouseEventHandler } from "react";
+import React, { FC, ReactNode, ChangeEvent } from "react";
 
 type ColorTypes = "gray" | "navy" | "cadetBlue";
 
 interface PropTypes {
   colorType?: ColorTypes;
   _css?: SerializedStyles | SerializedStyles[];
-  onClick: MouseEventHandler<HTMLButtonElement>;
+  onClick: (event: ChangeEvent<HTMLButtonElement>) => void;
   children: ReactNode;
 }
 
@@ -20,7 +20,7 @@ export const Button: FC<PropTypes> = ({
   return (
     <div css={_css}>
       <button
-        onClick={onClick}
+        onClick={(event: any) => onClick(event)}
         css={[initialStyle, colorType && styles(colorType)]}
       >
         {children}

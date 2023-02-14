@@ -8,6 +8,7 @@ import { Button } from "@/components/atoms/Button";
 import ContentsWrap from "@/components/templates/ContentsWrap";
 import { DailyDataItemType } from "@/helpers/common/DataTypes";
 import { useDailyDatas } from "@/helpers/hooks/useDailyDatas";
+import moment from "moment";
 
 interface PropTypes {
   _css?: SerializedStyles | SerializedStyles[];
@@ -17,14 +18,14 @@ export const AddNewDailyData: FC<PropTypes> = ({ _css }) => {
   const { dailyDatas, setDailyDatas } = useDailyDatas();
   let [nextId] = useState(() => dailyDatas.length || 5);
   const [inputError, setInputError] = useState(false);
+  const [today] = useState(moment());
   const ERROR_MSG = "내용이 입력되지 않았습니다. 내용을 입력해주세요.";
-
   const DEFAULT_REVIEW_DATA = {
     id: nextId,
     title: "",
     comment: "",
     score: 0,
-    date: "2023/01/01",
+    date: today.format("YYYY/M/D"),
   };
 
   const [inputData, setInputData] =
@@ -50,9 +51,7 @@ export const AddNewDailyData: FC<PropTypes> = ({ _css }) => {
     }
   };
 
-  const setDate = () => {
-    const today = new Date();
-  };
+  const setDate = () => {};
 
   useEffect(() => {
     window.localStorage.setItem("dailyDatas", JSON.stringify(dailyDatas));
@@ -110,7 +109,12 @@ export const AddNewDailyData: FC<PropTypes> = ({ _css }) => {
           name="score"
           selectOptions={starScoreOptions}
         />
-        <Button colorType={"cadetBlue"} onClick={() => handleSubmit}>
+        <Button
+          colorType={"cadetBlue"}
+          onClick={(event: ChangeEvent<HTMLButtonElement>) =>
+            handleSubmit(event)
+          }
+        >
           {"등록"}
         </Button>
       </form>
@@ -120,9 +124,9 @@ export const AddNewDailyData: FC<PropTypes> = ({ _css }) => {
 
 const styles = {
   wrap: css`
+    padding: 0 15px;
     ${mediaQueries("md")} {
       width: calc(50% - 5px);
-      padding: 0 15px;
     }
   `,
   title: css`
