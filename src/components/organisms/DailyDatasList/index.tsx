@@ -62,7 +62,8 @@ export const DailyDatasList: FC<PropTypes> = ({ _css, keyword }) => {
         <Title element="H2" _css={styles.title}>
           그간의 기록들
         </Title>
-        <CardCategories />
+        {/* TODO: CardCategories 기능 만들기! */}
+        {/* <CardCategories /> */}
         <section css={styles.cardsBlock}>
           {!isLoaded ? (
             <>지금까지의 일기를 불러오고 있습니다.</>
