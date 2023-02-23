@@ -46,6 +46,7 @@ const styles = {
     border: 1px ${COLORS.CADET_BLUE};
     padding: 1px 4px;
     vertical-align: middle;
+    margin: 0;
     margin-right: 10px;
     font-size: 12px;
     line-height: 14px;
