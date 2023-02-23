@@ -1,4 +1,5 @@
 import { COLORS } from "@/styles/variables/Colors";
+import { STAR_CLASS_NAME } from "@/styles/variables/Icons";
 import { css, SerializedStyles } from "@emotion/react";
 import React, { FC } from "react";
 
@@ -11,7 +12,6 @@ interface PropTypes {
 }
 
 export const Star: FC<PropTypes> = ({ starColor = "yellow", _css, score }) => {
-  const STAR_CLASS_NAME = "fa fa-star";
 
   const makeStars = (score: number) => {
     const icons = [];
