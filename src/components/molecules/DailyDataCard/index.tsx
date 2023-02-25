@@ -2,7 +2,14 @@ import { COLORS } from "@/styles/variables/Colors";
 import { css, SerializedStyles } from "@emotion/react";
 import React, { FC } from "react";
 import { Title } from "@/components/atoms/Title";
+import Icon from "@/components/atoms/Icon";
 import { DailyDataItemType } from "@/helpers/common/DataTypes";
+import {
+  MINUS_CLASS_NAME,
+  MINUS_HOVER_CLASS_NAME,
+  PENCIL_CLASS_NAME,
+  PENCIL_HOVER_CLASS_NAME,
+} from "@/styles/variables/Icons";
 import { Star } from "@/components/atoms/Star";
 import Tag from "@/components/atoms/Tag";
 
@@ -25,30 +32,70 @@ export const DailyDataCard: FC<PropTypes> = ({ _css, item }) => {
         <Tag tag={sort} borderStyle={"solid"} />
         <p css={styles.comment}>{date}</p>
       </div>
-      {score !== 0 && <Star score={score} />}
+      <section css={styles.iconSection}>
+        {score !== 0 && <Star score={score} />}
+        <div css={styles.iconsWrap}>
+          <Icon
+            classNames={PENCIL_CLASS_NAME}
+            hoverClassNames={PENCIL_HOVER_CLASS_NAME}
+            iconColor={COLORS.CADET_BLUE}
+            isHover={false}
+          />
+          <Icon
+            classNames={MINUS_CLASS_NAME}
+            hoverClassNames={MINUS_HOVER_CLASS_NAME}
+            iconColor={COLORS.CADET_BLUE}
+            isHover={false}
+          />
+        </div>
+      </section>
     </article>
   );
 };
 
 const styles = {
   wrap: css`
-    padding: 10px 15px 25px;
+    padding: 10px 15px 20px;
     border-radius: 10px;
     border: 1px solid ${COLORS.GRAY[1]};
     color: ${COLORS.BASECOLOR};
     background-color: ${COLORS.WHITE};
     margin-bottom: 10px;
     box-shadow: 1px 0px 10px 1px rgba(0, 0, 0, 0.1);
+    position: relative;
   `,
   title: css`
     margin-bottom: 10px;
   `,
   tagDateWrap: css`
     display: flex;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 8px;
   `,
   comment: css`
     font-size: 14px;
     line-height: 14px;
-    margin-bottom: 10px;
+    margin: 0;
+  `,
+  iconSection: css`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  `,
+  iconsWrap: css`
+    display: flex;
+    margin-right: 0;
+    margin-left: auto;
+
+    i {
+      margin-left: 20px;
+      cursor: pointer;
+      opacity: 0.7;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
   `,
 };
