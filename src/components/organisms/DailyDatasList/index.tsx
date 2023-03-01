@@ -17,7 +17,7 @@ interface PropTypes {
 export const DailyDatasList: FC<PropTypes> = ({ _css, keyword }) => {
   const [mounted, setMounted] = useState<boolean>(false);
   const { dailyDatas } = useDailyDatas();
-  const [sortingArr, setsortingArr] = useState<DailyDataItemType[]>(dailyDatas);
+  const [sortingArr, setSortingArr] = useState<DailyDataItemType[]>(dailyDatas);
   const isLoaded = !!Object.keys(dailyDatas).length;
   useEffect(() => {
     setMounted(true);
@@ -50,8 +50,22 @@ export const DailyDatasList: FC<PropTypes> = ({ _css, keyword }) => {
     });
   }, [sortingArr]);
 
+  // type tagType = "" | "todo" | "dairy" | "memo";
+
+  // const [sortState, setSortState] = useState<"" | "todo" | "dairy" | "memo">(
+  //   ""
+  // );
+
+  // const handleSortTag = (tag: tagType) => {
+  //   setSortState(tag);
+
+  //   setSortingArr(
+  //     sortingArr.filter((item: DailyDataItemType) => item.sort === "todo")
+  //   )
+  // };
+
   useEffect(() => {
-    setsortingArr(sortGroupString);
+    setSortingArr(sortGroupString);
   }, [sortingArr, dailyDatas, sortGroupString]);
 
   if (!mounted) return <></>;
@@ -62,11 +76,10 @@ export const DailyDatasList: FC<PropTypes> = ({ _css, keyword }) => {
         <Title element="H2" _css={styles.title}>
           그간의 기록들
         </Title>
-        {/* TODO: CardCategories 기능 만들기! */}
-        {/* <CardCategories /> */}
+        {/* <CardCategories handleSortTag={handleSortTag} /> */}
         <section css={styles.cardsBlock}>
           {!isLoaded ? (
-            <>지금까지의 일기를 불러오고 있습니다.</>
+            <>지금까지의 기록을 불러오고 있습니다.</>
           ) : (
             sortingArr
               .filter((dailyData) => {
