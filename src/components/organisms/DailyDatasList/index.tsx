@@ -50,7 +50,7 @@ export const DailyDatasList: FC<PropTypes> = ({ _css, keyword }) => {
     });
   }, [sortingArr]);
 
-  // type tagType = "" | "todo" | "dairy" | "memo";
+  type tagType = "all" | "todo" | "dairy" | "memo";
 
   // const [sortState, setSortState] = useState<"" | "todo" | "dairy" | "memo">(
   //   ""
@@ -61,7 +61,7 @@ export const DailyDatasList: FC<PropTypes> = ({ _css, keyword }) => {
 
   //   setSortingArr(
   //     sortingArr.filter((item: DailyDataItemType) => item.sort === "todo")
-  //   )
+  //   );
   // };
 
   useEffect(() => {
