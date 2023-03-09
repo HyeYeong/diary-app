@@ -24,9 +24,9 @@ export const DailyDatasList: FC<PropTypes> = ({ _css, keyword }) => {
   }, []);
 
   const sortGroupString = useMemo(() => {
-    const patternKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+    // const patternKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
     const patternNumber = /[0-9]/;
-    const patternAlphabet = /[A-Za-z]/;
+    // const patternAlphabet = /[A-Za-z]/;
     const orderLevelDesc = [patternNumber];
 
     const getLevel = (str: string) => {
