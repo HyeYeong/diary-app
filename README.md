@@ -6,6 +6,13 @@ https://hyeyeong.github.io/daily-pieces/
 - 할일이든, 메모든, 일기든 뭐든! 기록해주세요
 - 당장은 로컬스토리지로 데이터를 저장했지만 추후 데이터베이스를 이용해 데이터를 저장할 예정
 
+#### Stack
+- Next Js
+- typescript
+- scss(react emotion)
+- storybook
+- atomic design
+
 #### 업데이트 예정
 
 1. 태그별 분류(sort)
