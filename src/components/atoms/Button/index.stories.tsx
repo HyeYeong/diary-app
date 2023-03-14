@@ -35,13 +35,8 @@ DefaultPattern.args = {
   _css: initialStyle,
 };
 
-export const OtherColor = Template.bind({});
-OtherColor.args = {
+export const OtherPattern = Template.bind({});
+OtherPattern.args = {
   colorType: "cadetBlue",
-  children: "Button",
-};
-
-OtherColor.args = {
-  colorType: "gray",
   children: "Button",
 };
