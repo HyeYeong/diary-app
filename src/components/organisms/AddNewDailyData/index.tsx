@@ -91,7 +91,7 @@ export const AddNewDailyData: FC<PropTypes> = ({ _css }) => {
           하루 이야기
         </Title>
 
-        <Title element="H4" _css={styles.subTitle}>
+        <Title element="H4" requirement={true} _css={styles.subTitle}>
           제목
         </Title>
         <div>
@@ -104,7 +104,7 @@ export const AddNewDailyData: FC<PropTypes> = ({ _css }) => {
           />
         </div>
 
-        <Title element="H4" _css={styles.subTitle}>
+        <Title element="H4" requirement={true} _css={styles.subTitle}>
           내용
         </Title>
         <Input
@@ -115,7 +115,7 @@ export const AddNewDailyData: FC<PropTypes> = ({ _css }) => {
           _css={styles.input}
         />
 
-        <Title element="H4" _css={styles.subTitle}>
+        <Title element="H4" requirement={true} _css={styles.subTitle}>
           분류
         </Title>
         <Select

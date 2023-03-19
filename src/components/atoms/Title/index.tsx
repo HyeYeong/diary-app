@@ -16,6 +16,7 @@ type HeaderElement = keyof typeof ELEMENTS;
 interface PropTypes {
   children: string | JSX.Element | ReactNode;
   element: HeaderElement;
+  requirement?: boolean;
   description?: string;
   startDate?: string;
   endDate?: string;
@@ -24,6 +25,7 @@ interface PropTypes {
 
 export const Title: NextPage<PropTypes> = ({
   element,
+  requirement,
   children,
   description,
   startDate,
@@ -33,7 +35,14 @@ export const Title: NextPage<PropTypes> = ({
   const ROOT_ELEMENT = ELEMENTS[element];
 
   return (
-    <ROOT_ELEMENT css={[initialStyles, element && titleStyles(element), _css]}>
+    <ROOT_ELEMENT
+      css={[
+        initialStyles,
+        element && titleStyles(element),
+        requirement && requirementStyle,
+        _css,
+      ]}
+    >
       {children}
       {(description || startDate || endDate) && (
         <p css={haveDateStyles}>
@@ -49,6 +58,18 @@ const initialStyles = css`
   font-weight: bold;
   color: ${COLORS.BASECOLOR};
   position: relative;
+`;
+
+const requirementStyle = css`
+  &:after {
+    content: "*";
+    display: inline;
+    padding-left: 5px;
+    font-weight: normal;
+    font-size: 90%;
+    vertical-align: text-top;
+    color: ${COLORS.CADET_BLUE};
+  }
 `;
 
 const titleStyles = (element: string) => {
