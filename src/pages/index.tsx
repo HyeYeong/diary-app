@@ -55,6 +55,7 @@ const styles = {
     ${mediaQueries("md")} {
       display: flex;
       justify-content: space-between;
+      height: 100%;
     }
   `,
   title: css`
