@@ -121,7 +121,7 @@ const styles = {
   cardsBlock: css`
     ${mediaQueries("md")} {
       overflow-y: scroll;
-      height: calc(100vh - 175px);
+      height: calc(100vh - 240px);
       padding: 8px;
     }
   `,
