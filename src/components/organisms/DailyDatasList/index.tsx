@@ -57,7 +57,7 @@ export const DailyDatasList: FC<PropTypes> = ({ _css, keyword }) => {
     setSortingArr(sortGroupString);
   }, [sortingArr, dailyDatas, sortGroupString, sortState]);
 
-  if (!mounted) return <></>;
+  if (!mounted || !isLoaded) return <>지금까지의 기록을 불러오고 있습니다.</>;
 
   return (
     mounted && (
@@ -68,7 +68,7 @@ export const DailyDatasList: FC<PropTypes> = ({ _css, keyword }) => {
         <CardCategories setSortState={setSortState} selectedTag={sortState} />
         <section css={styles.cardsBlock}>
           {!isLoaded ? (
-            <>지금까지의 기록을 불러오고 있습니다.</>
+            <p>지금까지의 기록을 불러오고 있습니다.</p>
           ) : (
             sortingArr
               // NOTE: 카테고리별 정렬 기능
@@ -95,7 +95,6 @@ export const DailyDatasList: FC<PropTypes> = ({ _css, keyword }) => {
                     dailyData.date.toLowerCase().includes(keyword.toLowerCase())
                   )
                     return dailyData.date;
-                  // TODO: return <p>검색결과가 없습니다</p>;
                 } else {
                   return dailyData;
                 }
