@@ -8,6 +8,7 @@ import { useDailyDatas } from "@/helpers/hooks/useDailyDatas";
 import { DailyDataItemType } from "@/helpers/common/DataTypes";
 import { mediaQueries } from "@/styles/mixins/MediaQueries";
 import { COLORS } from "@/styles/variables/Colors";
+import { tagType } from "@/helpers/common/DataTypes";
 
 interface PropTypes {
   _css?: SerializedStyles | SerializedStyles[];
@@ -50,25 +51,13 @@ export const DailyDatasList: FC<PropTypes> = ({ _css, keyword }) => {
     });
   }, [sortingArr]);
 
-  type tagType = "all" | "todo" | "dairy" | "memo";
-
-  // const [sortState, setSortState] = useState<"" | "todo" | "dairy" | "memo">(
-  //   ""
-  // );
-
-  // const handleSortTag = (tag: tagType) => {
-  //   setSortState(tag);
-
-  //   setSortingArr(
-  //     sortingArr.filter((item: DailyDataItemType) => item.sort === "todo")
-  //   );
-  // };
+  const [sortState, setSortState] = useState<tagType>("all");
 
   useEffect(() => {
     setSortingArr(sortGroupString);
-  }, [sortingArr, dailyDatas, sortGroupString]);
+  }, [sortingArr, dailyDatas, sortGroupString, sortState]);
 
-  if (!mounted) return <></>;
+  if (!mounted || !isLoaded) return <>지금까지의 기록을 불러오고 있습니다.</>;
 
   return (
     mounted && (
@@ -76,12 +65,18 @@ export const DailyDatasList: FC<PropTypes> = ({ _css, keyword }) => {
         <Title element="H2" _css={styles.title}>
           그간의 기록들
         </Title>
-        {/* <CardCategories handleSortTag={handleSortTag} /> */}
+        <CardCategories setSortState={setSortState} selectedTag={sortState} />
         <section css={styles.cardsBlock}>
           {!isLoaded ? (
-            <>지금까지의 기록을 불러오고 있습니다.</>
+            <p>지금까지의 기록을 불러오고 있습니다.</p>
           ) : (
             sortingArr
+              // NOTE: 카테고리별 정렬 기능
+              .filter((dailyData) => {
+                if (sortState === "all") return dailyData;
+                return dailyData.sort === sortState;
+              })
+              // NOTE: 키워드 검색
               .filter((dailyData) => {
                 if (keyword !== "") {
                   if (
@@ -100,7 +95,6 @@ export const DailyDatasList: FC<PropTypes> = ({ _css, keyword }) => {
                     dailyData.date.toLowerCase().includes(keyword.toLowerCase())
                   )
                     return dailyData.date;
-                  // TODO: return <p>검색결과가 없습니다</p>;
                 } else {
                   return dailyData;
                 }

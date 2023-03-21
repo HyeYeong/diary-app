@@ -2,30 +2,44 @@ import { COLORS } from "@/styles/variables/Colors";
 import { css, SerializedStyles } from "@emotion/react";
 import React, { FC } from "react";
 import { mediaQueries } from "@/styles/mixins/MediaQueries";
-
+import { tagType } from "@/helpers/common/DataTypes";
 interface PropTypes {
-  // sort: "todo" | "dairy" | "memo";
+  selectedTag: string;
+  setSortState: (tag: tagType) => void;
   _css?: SerializedStyles | SerializedStyles[];
 }
 
-export const CardCategories: FC<PropTypes> = ({ _css }) => {
-  // TODO: 메뉴별 카드 정렬기능 추가하기
-  const isChecked = true;
+export const CardCategories: FC<PropTypes> = ({
+  _css,
+  selectedTag,
+  setSortState,
+}) => {
+  const handleSortTag = (tag: tagType) => setSortState(tag);
   return (
+    // TODO: 버튼들 반복문을 이용해서 보기 좋게 리팩토링하기.
     <article css={[styles.wrap, _css]}>
       <p
-        css={[styles.button, isChecked && styles.checkedButton]}
-        onClick={() => console.log("all")}
+        css={[styles.button, selectedTag === "all" && styles.checkedButton]}
+        onClick={() => handleSortTag("all")}
       >
         ALL
       </p>
-      <p css={styles.button} onClick={() => console.log("todo")}>
+      <p
+        css={[styles.button, selectedTag === "todo" && styles.checkedButton]}
+        onClick={() => handleSortTag("todo")}
+      >
         할일
       </p>
-      <p css={styles.button} onClick={() => console.log("dairy")}>
+      <p
+        css={[styles.button, selectedTag === "dairy" && styles.checkedButton]}
+        onClick={() => handleSortTag("dairy")}
+      >
         일기
       </p>
-      <p css={styles.button} onClick={() => console.log("memo")}>
+      <p
+        css={[styles.button, selectedTag === "memo" && styles.checkedButton]}
+        onClick={() => handleSortTag("memo")}
+      >
         메모
       </p>
     </article>
