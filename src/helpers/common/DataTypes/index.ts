@@ -14,3 +14,5 @@ export type DailyDataItemType = {
   score: number;
   date: string
 };
+
+export type tagType = "all" | "todo" | "dairy" | "memo";
