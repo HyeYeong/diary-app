@@ -34,7 +34,8 @@ export const DailyDataCard: FC<PropTypes> = ({ _css, item }) => {
       </div>
       <section css={styles.iconSection}>
         {score !== 0 && <Star score={score} />}
-        <div css={styles.iconsWrap}>
+        {/* TODO: 카드 수정 및 삭제 기능 구현할 때 아래 dom살리기 */}
+        {/* <div css={styles.iconsWrap}>
           <Icon
             classNames={PENCIL_CLASS_NAME}
             hoverClassNames={PENCIL_HOVER_CLASS_NAME}
@@ -47,7 +48,7 @@ export const DailyDataCard: FC<PropTypes> = ({ _css, item }) => {
             iconColor={COLORS.CADET_BLUE}
             isHover={false}
           />
-        </div>
+        </div> */}
       </section>
     </article>
   );
