@@ -67,6 +67,7 @@ const styles = {
   `,
   title: css`
     margin-bottom: 10px;
+    word-wrap: break-word;
   `,
   tagDateWrap: css`
     display: flex;
@@ -78,6 +79,7 @@ const styles = {
     font-size: 14px;
     line-height: 14px;
     margin: 0;
+    word-wrap: break-word;
   `,
   iconSection: css`
     display: flex;
