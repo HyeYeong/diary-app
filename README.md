@@ -15,7 +15,7 @@ https://hyeyeong.github.io/daily-pieces/
 
 #### 업데이트 예정
 
-- [ ] 1. 태그별 분류(sort)
+- [x] 1. 태그별 분류(sort)
 - [ ] 2. 내용 input을 textarea로 해서 높이 조절 가능하게 만들기
 - [ ] 3. input 안에서 enter키를 입력했을 때 개행이 될 수 있도록 수정
 - [ ] 4. 삭제
