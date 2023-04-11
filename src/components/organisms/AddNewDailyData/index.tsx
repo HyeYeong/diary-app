@@ -151,7 +151,8 @@ const styles = {
   wrap: css`
     padding: 0 15px;
     ${mediaQueries("md")} {
-      width: calc(50% - 5px);
+      width: calc(50% - 15px);
+      box-sizing: border-box;
     }
   `,
   title: css`

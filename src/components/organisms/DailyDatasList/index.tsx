@@ -113,7 +113,8 @@ const styles = {
     background-color: ${COLORS.GRAY[1]};
     ${mediaQueries("md")} {
       padding-top: 0;
-      width: calc(50% - 5px);
+      width: calc(50% - 15px);
+      box-sizing: border-box;
       border-left: 1px dashed ${COLORS.CADET_BLUE};
       background-color: transparent;
     }
