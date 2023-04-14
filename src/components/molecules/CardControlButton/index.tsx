@@ -3,6 +3,7 @@ import { css, SerializedStyles } from "@emotion/react";
 import React, { FC, ChangeEvent, useEffect } from "react";
 import { useDailyDatas } from "@/helpers/hooks/useDailyDatas";
 import Icon from "@/components/atoms/Icon";
+import { DailyDataItemType } from "@/helpers/common/DataTypes";
 
 import {
   MINUS_CLASS_NAME,
@@ -18,6 +19,8 @@ interface PropTypes {
   isHover?: boolean;
   itemId: number | string;
   _css?: SerializedStyles | SerializedStyles[];
+  sortingArr: DailyDataItemType[];
+  setSortingArr: React.Dispatch<React.SetStateAction<DailyDataItemType[]>>;
 }
 
 export const CardControlButton: FC<PropTypes> = ({
@@ -26,6 +29,8 @@ export const CardControlButton: FC<PropTypes> = ({
   isHover = false,
   buttonType,
   itemId,
+  sortingArr,
+  setSortingArr,
 }) => {
   const { dailyDatas, setDailyDatas } = useDailyDatas();
 
@@ -44,16 +49,13 @@ export const CardControlButton: FC<PropTypes> = ({
     }
   };
 
-  const handleDelete = (event: ChangeEvent<HTMLButtonElement>) => {
-    console.log(event.currentTarget.parentElement);
+  const handleDelete = () => {
+    setSortingArr(sortingArr.filter((data) => data.id !== itemId));
     setDailyDatas(dailyDatas.filter((data) => data.id !== itemId));
   };
 
   return (
-    <button
-      onClick={(event: any) => handleDelete(event)}
-      css={styles.iconButtonReset}
-    >
+    <button onClick={() => handleDelete()} css={[styles.iconButtonReset, _css]}>
       <Icon
         classNames={iconType(buttonType).class}
         hoverClassNames={iconType(buttonType).hoverClass}
