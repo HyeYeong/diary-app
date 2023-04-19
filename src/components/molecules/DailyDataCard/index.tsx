@@ -8,7 +8,6 @@ import { Star } from "@/components/atoms/Star";
 import Tag from "@/components/atoms/Tag";
 
 interface PropTypes {
-  index: number;
   item: DailyDataItemType;
   sortingArr: DailyDataItemType[];
   setSortingArr: React.Dispatch<React.SetStateAction<DailyDataItemType[]>>;
@@ -18,7 +17,6 @@ interface PropTypes {
 export const DailyDataCard: FC<PropTypes> = ({
   _css,
   item,
-  index,
   sortingArr,
   setSortingArr,
 }) => {
@@ -26,7 +24,7 @@ export const DailyDataCard: FC<PropTypes> = ({
 
   //TODO: 데이터 수정 기능 추가하기
   return (
-    <article key={index} css={[styles.wrap, _css]}>
+    <article css={[styles.wrap, _css]}>
       <Title element="H4" _css={styles.title}>
         {title}
       </Title>

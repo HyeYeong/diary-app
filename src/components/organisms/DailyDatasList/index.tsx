@@ -106,10 +106,10 @@ export const DailyDatasList: FC<PropTypes> = ({ _css, keyword }) => {
                 return dailyData;
               }
             })
-            .map((item, index) => (
+            .map((item: DailyDataItemType) => (
               <DailyDataCard
                 item={item}
-                index={index}
+                key={item.id}
                 sortingArr={sortingArr}
                 setSortingArr={setSortingArr}
               />
