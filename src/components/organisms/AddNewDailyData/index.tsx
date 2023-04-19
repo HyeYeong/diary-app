@@ -67,8 +67,6 @@ export const AddNewDailyData: FC<PropTypes> = ({ _css }) => {
     }
   };
 
-  const setDate = () => {};
-
   useEffect(() => {
     window.localStorage.setItem("dailyDatas", JSON.stringify(dailyDatas));
   }, [dailyDatas]);

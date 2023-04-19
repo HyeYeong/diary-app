@@ -58,7 +58,7 @@ const styles = {
     background-color: ${COLORS.WHITE};
     z-index: 1;
     padding-bottom: 0 !important;
-    opacity: 0.8;
+    opacity: 0.4;
     transition: all 0.4s;
 
     &:hover {

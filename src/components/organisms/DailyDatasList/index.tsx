@@ -1,5 +1,5 @@
 import { css, SerializedStyles } from "@emotion/react";
-import React, { FC, useEffect, useState, useMemo } from "react";
+import React, { FC, useEffect, useState, useMemo, useRef } from "react";
 import { Title } from "@/components/atoms/Title";
 import ContentsWrap from "@/components/templates/ContentsWrap";
 import { CardCategories } from "@/components/molecules/CardCategories";
@@ -24,7 +24,7 @@ export const DailyDatasList: FC<PropTypes> = ({ _css, keyword }) => {
     setMounted(true);
   }, []);
 
-  const sortGroupString = useMemo(() => {
+  const sortGroupString = () => {
     // const patternKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
     const patternNumber = /[0-9]/;
     // const patternAlphabet = /[A-Za-z]/;
@@ -49,7 +49,7 @@ export const DailyDatasList: FC<PropTypes> = ({ _css, keyword }) => {
       return Number(bDate) - Number(aDate);
       // NOTE: 날짜순 정렬
     });
-  }, [sortingArr]);
+  };
 
   const [sortState, setSortState] = useState<tagType>("all");
 
@@ -57,7 +57,22 @@ export const DailyDatasList: FC<PropTypes> = ({ _css, keyword }) => {
     setSortingArr(sortGroupString);
   }, [sortingArr, dailyDatas, sortGroupString, sortState]);
 
-  if (!mounted || !isLoaded) return <>지금까지의 기록을 불러오고 있습니다.</>;
+  if (!mounted || !isLoaded)
+    return (
+      <ContentsWrap _css={styles.wrap}>
+        <section css={styles.cardsBlock}>
+          <Title element="H2" _css={styles.title}>
+            그간의 기록들
+          </Title>
+          <p css={styles.emptyData}>
+            앗! <br />
+            아직 등록된 이야기가 없거나 불러올 수 없어요 {`:(`}
+            <br />
+            다음에 다시 시도해 주세요.
+          </p>
+        </section>
+      </ContentsWrap>
+    );
 
   return (
     mounted && (
@@ -67,40 +82,38 @@ export const DailyDatasList: FC<PropTypes> = ({ _css, keyword }) => {
         </Title>
         <CardCategories setSortState={setSortState} selectedTag={sortState} />
         <section css={styles.cardsBlock}>
-          {!isLoaded ? (
-            <p>지금까지의 기록을 불러오고 있습니다.</p>
-          ) : (
-            sortingArr
-              // NOTE: 카테고리별 정렬 기능
-              .filter((dailyData) => {
-                if (sortState === "all") return dailyData;
-                return dailyData.sort === sortState;
-              })
-              // NOTE: 키워드 검색
-              .filter((dailyData) => {
-                if (keyword !== "") {
-                  if (
-                    dailyData.title
-                      .toLowerCase()
-                      .includes(keyword.toLowerCase())
-                  )
-                    return dailyData.title;
-                  if (
-                    dailyData.comment
-                      .toLowerCase()
-                      .includes(keyword.toLowerCase())
-                  )
-                    return dailyData.comment;
-                  if (
-                    dailyData.date.toLowerCase().includes(keyword.toLowerCase())
-                  )
-                    return dailyData.date;
-                } else {
-                  return dailyData;
-                }
-              })
-              .map((item, index) => <DailyDataCard item={item} key={index} />)
-          )}
+          {sortingArr
+            // NOTE: 카테고리별 정렬 기능
+            .filter((dailyData) => {
+              if (sortState === "all") return dailyData;
+              return dailyData.sort === sortState;
+            })
+            // NOTE: 키워드 검색
+            .filter((dailyData) => {
+              if (keyword !== "") {
+                // NOTE: title에 키워드가 있을 경우 가장 먼저 반환
+                dailyData.title.toLowerCase().includes(keyword.toLowerCase()) &&
+                  dailyData.title;
+                // NOTE: 그 다음으로 comment에 키워드가 있다면 반환
+                dailyData.comment
+                  .toLowerCase()
+                  .includes(keyword.toLowerCase()) && dailyData.comment;
+                // NOTE: 그 다음으로 date에 키워드가 있다면 반환
+                dailyData.date.toLowerCase().includes(keyword.toLowerCase()) &&
+                  dailyData.date;
+                // NOTE: 키워드를 입력 후 해당하는 키워드가 없다면 아무것도 반환하지 않음
+              } else {
+                return dailyData;
+              }
+            })
+            .map((item: DailyDataItemType) => (
+              <DailyDataCard
+                item={item}
+                key={item.id}
+                sortingArr={sortingArr}
+                setSortingArr={setSortingArr}
+              />
+            ))}
         </section>
       </ContentsWrap>
     )
@@ -131,5 +144,9 @@ const styles = {
   `,
   title: css`
     margin-bottom: 16px;
+  `,
+  emptyData: css`
+    line-height: 2rem;
+    color: ${COLORS.GRAY[0]};
   `,
 };

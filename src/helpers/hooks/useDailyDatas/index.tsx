@@ -14,7 +14,7 @@ export const useDailyDatas = () => {
 
   useEffect(() => {
     window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(dailyDatas));
-  }, [LOCAL_STORAGE_KEY, dailyDatas]);
+  }, [LOCAL_STORAGE_KEY, dailyDatas, setDailyDatas]);
 
   return {
     dailyDatas,
