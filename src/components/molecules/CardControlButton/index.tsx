@@ -59,16 +59,14 @@ export const CardControlButton: FC<PropTypes> = ({
       />
     );
   };
-  let [copyArr] = useState<DailyDataItemType[]>(dailyDatas);
   const handleDelete = (event: MouseEvent<HTMLButtonElement>) => {
     const targetId = parseInt(event.currentTarget.offsetParent!.id, 10);
-
-    setDailyDatas(copyArr.filter((data) => data.id !== targetId));
+    setSortingArr(sortingArr.filter((data) => data.id !== targetId));
   };
 
   useEffect(() => {
-    setSortingArr(dailyDatas);
-  }, [dailyDatas]);
+    setDailyDatas(sortingArr);
+  }, [sortingArr]);
 
   return (
     <button

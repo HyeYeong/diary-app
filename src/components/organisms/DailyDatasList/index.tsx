@@ -53,26 +53,33 @@ export const DailyDatasList: FC<PropTypes> = ({ _css, keyword }) => {
 
   const [sortState, setSortState] = useState<tagType>("all");
 
+  const errorMsg = () => {
+    return (
+      <p css={styles.emptyData}>
+        앗! <br />
+        아직 등록된 이야기가 없거나 불러올 수 없어요 {`:(`}
+        <br />
+        다음에 다시 시도해 주세요.
+      </p>
+    );
+  };
+
   useEffect(() => {
     setSortingArr(sortGroupString);
   }, [sortingArr, dailyDatas, sortGroupString, sortState]);
 
-  if (!mounted || !isLoaded)
+  if (!mounted || !isLoaded) {
     return (
       <ContentsWrap _css={styles.wrap}>
         <section css={styles.cardsBlock}>
           <Title element="H2" _css={styles.title}>
             그간의 기록들
           </Title>
-          <p css={styles.emptyData}>
-            앗! <br />
-            아직 등록된 이야기가 없거나 불러올 수 없어요 {`:(`}
-            <br />
-            다음에 다시 시도해 주세요.
-          </p>
+          {errorMsg()}
         </section>
       </ContentsWrap>
     );
+  }
 
   return (
     mounted && (
@@ -82,38 +89,42 @@ export const DailyDatasList: FC<PropTypes> = ({ _css, keyword }) => {
         </Title>
         <CardCategories setSortState={setSortState} selectedTag={sortState} />
         <section css={styles.cardsBlock}>
-          {sortingArr
-            // NOTE: 카테고리별 정렬 기능
-            .filter((dailyData) => {
-              if (sortState === "all") return dailyData;
-              return dailyData.sort === sortState;
-            })
-            // NOTE: 키워드 검색
-            .filter((dailyData) => {
-              if (keyword !== "") {
-                // NOTE: title에 키워드가 있을 경우 가장 먼저 반환
-                dailyData.title.toLowerCase().includes(keyword.toLowerCase()) &&
-                  dailyData.title;
-                // NOTE: 그 다음으로 comment에 키워드가 있다면 반환
-                dailyData.comment
-                  .toLowerCase()
-                  .includes(keyword.toLowerCase()) && dailyData.comment;
-                // NOTE: 그 다음으로 date에 키워드가 있다면 반환
-                dailyData.date.toLowerCase().includes(keyword.toLowerCase()) &&
-                  dailyData.date;
-                // NOTE: 키워드를 입력 후 해당하는 키워드가 없다면 아무것도 반환하지 않음
-              } else {
-                return dailyData;
-              }
-            })
-            .map((item: DailyDataItemType) => (
-              <DailyDataCard
-                item={item}
-                key={item.id}
-                sortingArr={sortingArr}
-                setSortingArr={setSortingArr}
-              />
-            ))}
+          {sortingArr.length > 0
+            ? sortingArr
+                // NOTE: 카테고리별 정렬 기능
+                .filter((dailyData) => {
+                  if (sortState === "all") return dailyData;
+                  return dailyData.sort === sortState;
+                })
+                // NOTE: 키워드 검색
+                .filter((dailyData) => {
+                  if (keyword !== "") {
+                    // NOTE: title에 키워드가 있을 경우 가장 먼저 반환
+                    dailyData.title
+                      .toLowerCase()
+                      .includes(keyword.toLowerCase()) && dailyData.title;
+                    // NOTE: 그 다음으로 comment에 키워드가 있다면 반환
+                    dailyData.comment
+                      .toLowerCase()
+                      .includes(keyword.toLowerCase()) && dailyData.comment;
+                    // NOTE: 그 다음으로 date에 키워드가 있다면 반환
+                    dailyData.date
+                      .toLowerCase()
+                      .includes(keyword.toLowerCase()) && dailyData.date;
+                    // NOTE: 키워드를 입력 후 해당하는 키워드가 없다면 아무것도 반환하지 않음
+                  } else {
+                    return dailyData;
+                  }
+                })
+                .map((item: DailyDataItemType) => (
+                  <DailyDataCard
+                    item={item}
+                    key={item.id}
+                    sortingArr={sortingArr}
+                    setSortingArr={setSortingArr}
+                  />
+                ))
+            : errorMsg()}
         </section>
       </ContentsWrap>
     )
