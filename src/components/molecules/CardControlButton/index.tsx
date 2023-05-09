@@ -1,6 +1,6 @@
 import { COLORS } from "@/styles/variables/Colors";
 import { css, SerializedStyles } from "@emotion/react";
-import React, { FC, ChangeEvent, useEffect } from "react";
+import React, { FC, MouseEvent, useEffect, useState } from "react";
 import { useDailyDatas } from "@/helpers/hooks/useDailyDatas";
 import Icon from "@/components/atoms/Icon";
 import { DailyDataItemType } from "@/helpers/common/DataTypes";
@@ -49,19 +49,33 @@ export const CardControlButton: FC<PropTypes> = ({
     }
   };
 
-  const handleDelete = () => {
-    setSortingArr(sortingArr.filter((data) => data.id !== itemId));
-    setDailyDatas(dailyDatas.filter((data) => data.id !== itemId));
-  };
-
-  return (
-    <button onClick={() => handleDelete()} css={[styles.iconButtonReset, _css]}>
+  const setIcon = (buttonType: ButtonType) => {
+    return (
       <Icon
         classNames={iconType(buttonType).class}
         hoverClassNames={iconType(buttonType).hoverClass}
         iconColor={iconColor}
         isHover={isHover}
       />
+    );
+  };
+  let [copyArr] = useState<DailyDataItemType[]>(dailyDatas);
+  const handleDelete = (event: MouseEvent<HTMLButtonElement>) => {
+    const targetId = parseInt(event.currentTarget.offsetParent!.id, 10);
+
+    setDailyDatas(copyArr.filter((data) => data.id !== targetId));
+  };
+
+  useEffect(() => {
+    setSortingArr(dailyDatas);
+  }, [dailyDatas]);
+
+  return (
+    <button
+      onClick={(event: MouseEvent<HTMLButtonElement>) => handleDelete(event)}
+      css={[styles.iconButtonReset, _css]}
+    >
+      {setIcon(buttonType)}
     </button>
   );
 };
