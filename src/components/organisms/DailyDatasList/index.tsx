@@ -19,7 +19,7 @@ export const DailyDatasList: FC<PropTypes> = ({ _css, keyword }) => {
   const [mounted, setMounted] = useState<boolean>(false);
   const { dailyDatas } = useDailyDatas();
   const [sortingArr, setSortingArr] = useState<DailyDataItemType[]>(dailyDatas);
-  let [isArray, setIsArray] = useState(true);
+  let [isArray, setIsArray] = useState(false);
   const isLoaded = !!Object.keys(dailyDatas).length;
   useEffect(() => {
     setMounted(true);
@@ -66,7 +66,11 @@ export const DailyDatasList: FC<PropTypes> = ({ _css, keyword }) => {
   };
 
   useEffect(() => {
-    if (sortingArr.length) setIsArray(false);
+    if (sortingArr.length) {
+      setIsArray(true);
+    } else {
+      setIsArray(false);
+    }
     if (isArray) setSortingArr(sortGroupString);
   }, [sortingArr, dailyDatas, sortGroupString, sortState]);
 
