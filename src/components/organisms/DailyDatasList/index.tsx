@@ -19,6 +19,7 @@ export const DailyDatasList: FC<PropTypes> = ({ _css, keyword }) => {
   const [mounted, setMounted] = useState<boolean>(false);
   const { dailyDatas } = useDailyDatas();
   const [sortingArr, setSortingArr] = useState<DailyDataItemType[]>(dailyDatas);
+  let [isArray, setIsArray] = useState(true);
   const isLoaded = !!Object.keys(dailyDatas).length;
   useEffect(() => {
     setMounted(true);
@@ -65,7 +66,8 @@ export const DailyDatasList: FC<PropTypes> = ({ _css, keyword }) => {
   };
 
   useEffect(() => {
-    setSortingArr(sortGroupString);
+    if (sortingArr.length) setIsArray(false);
+    if (isArray) setSortingArr(sortGroupString);
   }, [sortingArr, dailyDatas, sortGroupString, sortState]);
 
   if (!mounted || !isLoaded) {
@@ -89,7 +91,7 @@ export const DailyDatasList: FC<PropTypes> = ({ _css, keyword }) => {
         </Title>
         <CardCategories setSortState={setSortState} selectedTag={sortState} />
         <section css={styles.cardsBlock}>
-          {sortingArr.length > 0
+          {isArray
             ? sortingArr
                 // NOTE: 카테고리별 정렬 기능
                 .filter((dailyData) => {

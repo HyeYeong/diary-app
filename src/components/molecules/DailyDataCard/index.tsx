@@ -44,7 +44,6 @@ export const DailyDataCard: FC<PropTypes> = ({
             setSortingArr={setSortingArr}
           /> */}
           <CardControlButton
-            itemId={id}
             buttonType="DELETE"
             sortingArr={sortingArr}
             setSortingArr={setSortingArr}

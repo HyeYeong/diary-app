@@ -16,7 +16,7 @@ interface PropTypes {
 
 export const AddNewDailyData: FC<PropTypes> = ({ _css }) => {
   const { dailyDatas, setDailyDatas } = useDailyDatas();
-  let lastId = dailyDatas[dailyDatas.length - 1].id;
+  let lastId = dailyDatas.length ? dailyDatas[dailyDatas.length - 1].id : 0;
   let [nextId] = useState(() => (dailyDatas.length > 0 ? lastId + 1 : 0));
 
   const [inputError, setInputError] = useState(false);
