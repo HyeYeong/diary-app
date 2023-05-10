@@ -17,7 +17,7 @@ interface PropTypes {
   buttonType: ButtonType;
   iconColor?: string;
   isHover?: boolean;
-  itemId: number | string;
+  itemId?: number | string;
   _css?: SerializedStyles | SerializedStyles[];
   sortingArr: DailyDataItemType[];
   setSortingArr: React.Dispatch<React.SetStateAction<DailyDataItemType[]>>;
@@ -32,7 +32,8 @@ export const CardControlButton: FC<PropTypes> = ({
   sortingArr,
   setSortingArr,
 }) => {
-  const { dailyDatas, setDailyDatas } = useDailyDatas();
+  const { setDailyDatas } = useDailyDatas();
+  const [isLastData, setIsLastData] = useState(false);
 
   const iconType = (buttonType: ButtonType) => {
     switch (buttonType) {
@@ -59,16 +60,17 @@ export const CardControlButton: FC<PropTypes> = ({
       />
     );
   };
-  let [copyArr] = useState<DailyDataItemType[]>(dailyDatas);
-  const handleDelete = (event: MouseEvent<HTMLButtonElement>) => {
-    const targetId = parseInt(event.currentTarget.offsetParent!.id, 10);
-
-    setDailyDatas(copyArr.filter((data) => data.id !== targetId));
-  };
 
   useEffect(() => {
-    setSortingArr(dailyDatas);
-  }, [dailyDatas]);
+    if (sortingArr.length === 1) setIsLastData(true);
+    setDailyDatas(() => sortingArr);
+  }, [sortingArr]);
+
+  const handleDelete = (event: MouseEvent<HTMLButtonElement>) => {
+    const targetId = parseInt(event.currentTarget.offsetParent!.id, 10);
+    if (isLastData) window.localStorage.removeItem("dailyDatas");
+    return setSortingArr(sortingArr.filter((data) => data.id !== targetId));
+  };
 
   return (
     <button
