@@ -1,6 +1,6 @@
 import { COLORS } from "@/styles/variables/Colors";
 import { css, SerializedStyles } from "@emotion/react";
-import React, { FC, ChangeEvent, useEffect } from "react";
+import React, { FC, MouseEvent, useEffect, useState } from "react";
 import { useDailyDatas } from "@/helpers/hooks/useDailyDatas";
 import Icon from "@/components/atoms/Icon";
 import { DailyDataItemType } from "@/helpers/common/DataTypes";
@@ -17,7 +17,7 @@ interface PropTypes {
   buttonType: ButtonType;
   iconColor?: string;
   isHover?: boolean;
-  itemId: number | string;
+  itemId?: number | string;
   _css?: SerializedStyles | SerializedStyles[];
   sortingArr: DailyDataItemType[];
   setSortingArr: React.Dispatch<React.SetStateAction<DailyDataItemType[]>>;
@@ -32,7 +32,8 @@ export const CardControlButton: FC<PropTypes> = ({
   sortingArr,
   setSortingArr,
 }) => {
-  const { dailyDatas, setDailyDatas } = useDailyDatas();
+  const { setDailyDatas } = useDailyDatas();
+  const [isLastData, setIsLastData] = useState(false);
 
   const iconType = (buttonType: ButtonType) => {
     switch (buttonType) {
@@ -49,19 +50,34 @@ export const CardControlButton: FC<PropTypes> = ({
     }
   };
 
-  const handleDelete = () => {
-    setSortingArr(sortingArr.filter((data) => data.id !== itemId));
-    setDailyDatas(dailyDatas.filter((data) => data.id !== itemId));
-  };
-
-  return (
-    <button onClick={() => handleDelete()} css={[styles.iconButtonReset, _css]}>
+  const setIcon = (buttonType: ButtonType) => {
+    return (
       <Icon
         classNames={iconType(buttonType).class}
         hoverClassNames={iconType(buttonType).hoverClass}
         iconColor={iconColor}
         isHover={isHover}
       />
+    );
+  };
+
+  useEffect(() => {
+    if (sortingArr.length === 1) setIsLastData(true);
+    setDailyDatas(() => sortingArr);
+  }, [sortingArr]);
+
+  const handleDelete = (event: MouseEvent<HTMLButtonElement>) => {
+    const targetId = parseInt(event.currentTarget.offsetParent!.id, 10);
+    if (isLastData) window.localStorage.removeItem("dailyDatas");
+    return setSortingArr(sortingArr.filter((data) => data.id !== targetId));
+  };
+
+  return (
+    <button
+      onClick={(event: MouseEvent<HTMLButtonElement>) => handleDelete(event)}
+      css={[styles.iconButtonReset, _css]}
+    >
+      {setIcon(buttonType)}
     </button>
   );
 };

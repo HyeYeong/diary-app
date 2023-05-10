@@ -16,7 +16,9 @@ interface PropTypes {
 
 export const AddNewDailyData: FC<PropTypes> = ({ _css }) => {
   const { dailyDatas, setDailyDatas } = useDailyDatas();
-  let [nextId] = useState(() => dailyDatas.length || 5);
+  let lastId = dailyDatas.length ? dailyDatas[dailyDatas.length - 1].id : 0;
+  let [nextId] = useState(() => (dailyDatas.length > 0 ? lastId + 1 : 0));
+
   const [inputError, setInputError] = useState(false);
   const [today] = useState(moment());
   const ERROR_MSG = "내용이 입력되지 않았습니다. 내용을 입력해주세요.";

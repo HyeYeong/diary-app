@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { initialData } from "@/datas/index";
 import { DailyDataItemType } from "@/helpers/common/DataTypes";
 
+export const initialData = [];
 export const useDailyDatas = () => {
   const LOCAL_STORAGE_KEY = "dailyDatas";
   const [dailyDatas, setDailyDatas] = useState<DailyDataItemType[]>(() => {

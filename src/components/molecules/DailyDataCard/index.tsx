@@ -24,7 +24,7 @@ export const DailyDataCard: FC<PropTypes> = ({
 
   //TODO: 데이터 수정 기능 추가하기
   return (
-    <article css={[styles.wrap, _css]}>
+    <article css={[styles.wrap, _css]} id={`${item.id}`}>
       <Title element="H4" _css={styles.title}>
         {title}
       </Title>
@@ -44,7 +44,6 @@ export const DailyDataCard: FC<PropTypes> = ({
             setSortingArr={setSortingArr}
           /> */}
           <CardControlButton
-            itemId={id}
             buttonType="DELETE"
             sortingArr={sortingArr}
             setSortingArr={setSortingArr}
