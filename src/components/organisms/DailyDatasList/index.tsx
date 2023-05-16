@@ -13,12 +13,18 @@ import { tagType } from "@/helpers/common/DataTypes";
 interface PropTypes {
   _css?: SerializedStyles | SerializedStyles[];
   keyword: string;
+  sortingArr: DailyDataItemType[];
+  setSortingArr: React.Dispatch<React.SetStateAction<DailyDataItemType[]>>;
 }
 
-export const DailyDatasList: FC<PropTypes> = ({ _css, keyword }) => {
+export const DailyDatasList: FC<PropTypes> = ({
+  _css,
+  keyword,
+  sortingArr,
+  setSortingArr,
+}) => {
   const [mounted, setMounted] = useState<boolean>(false);
   const { dailyDatas } = useDailyDatas();
-  const [sortingArr, setSortingArr] = useState<DailyDataItemType[]>(dailyDatas);
   let [isArray, setIsArray] = useState(false);
   const isLoaded = !!Object.keys(dailyDatas).length;
   useEffect(() => {

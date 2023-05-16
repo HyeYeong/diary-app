@@ -6,11 +6,15 @@ import { COLORS } from "@/styles/variables/Colors";
 import { AddNewDailyData } from "@/components/organisms/AddNewDailyData";
 import { SearchDailyDatas } from "@/components/organisms/SearchDailyDatas";
 import { DailyDatasList } from "@/components/organisms/DailyDatasList";
+import { useDailyDatas } from "@/helpers/hooks/useDailyDatas";
 import Centering from "@/components/templates/Centering";
+import { DailyDataItemType } from "@/helpers/common/DataTypes";
 
 export default function Home() {
   type keywordType = string;
+  const { dailyDatas } = useDailyDatas();
   const [keyword, setKeyword] = useState<keywordType>("");
+  const [sortingArr, setSortingArr] = useState<DailyDataItemType[]>(dailyDatas);
 
   return (
     <>
@@ -24,8 +28,12 @@ export default function Home() {
         <SearchDailyDatas keyword={keyword} setKeyword={setKeyword} />
         <Centering _css={styles.mqCentering}>
           <div css={styles.mqWrap}>
-            <AddNewDailyData />
-            <DailyDatasList keyword={keyword} />
+            <AddNewDailyData sortingArr={sortingArr} />
+            <DailyDatasList
+              keyword={keyword}
+              sortingArr={sortingArr}
+              setSortingArr={setSortingArr}
+            />
           </div>
         </Centering>
       </main>
