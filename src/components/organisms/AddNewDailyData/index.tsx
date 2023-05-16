@@ -12,12 +12,13 @@ import moment from "moment";
 
 interface PropTypes {
   _css?: SerializedStyles | SerializedStyles[];
+  sortingArr: DailyDataItemType[];
 }
 
-export const AddNewDailyData: FC<PropTypes> = ({ _css }) => {
-  const { dailyDatas, setDailyDatas } = useDailyDatas();
-  let lastId = dailyDatas.length ? dailyDatas[dailyDatas.length - 1].id : 0;
-  let [nextId] = useState(() => (dailyDatas.length > 0 ? lastId + 1 : 0));
+export const AddNewDailyData: FC<PropTypes> = ({ _css, sortingArr }) => {
+  const { setDailyDatas } = useDailyDatas();
+  let lastId = sortingArr.length ? sortingArr[sortingArr.length - 1].id : 0;
+  let [nextId] = useState(() => (sortingArr.length > 0 ? lastId + 1 : 0));
 
   const [inputError, setInputError] = useState(false);
   const [today] = useState(moment());
@@ -64,14 +65,14 @@ export const AddNewDailyData: FC<PropTypes> = ({ _css }) => {
       event.preventDefault();
       setInputError(true);
     } else {
-      setDailyDatas(dailyDatas.concat(inputData));
+      setDailyDatas(sortingArr.concat(inputData));
       resetInputs();
     }
   };
 
   useEffect(() => {
-    window.localStorage.setItem("dailyDatas", JSON.stringify(dailyDatas));
-  }, [dailyDatas]);
+    window.localStorage.setItem("dailyDatas", JSON.stringify(sortingArr));
+  }, [sortingArr]);
 
   const handleChange = (
     event: ChangeEvent<HTMLInputElement | HTMLSelectElement>
