@@ -31,34 +31,44 @@ export const DailyDatasList: FC<PropTypes> = ({
     setMounted(true);
   }, []);
 
-  const sortGroupString = () => {
+  const sortGrouping = () => {
     // const patternKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
     const patternNumber = /[0-9]/;
     // const patternAlphabet = /[A-Za-z]/;
-    const orderLevelDesc = [patternNumber];
+    const orderLevelDate = [patternNumber];
+    // const orderLevelLetter = [patternKorean];
+    let arr = sortingArr;
 
     const getLevel = (str: string) => {
-      const index = orderLevelDesc.findIndex((pattern) => pattern.test(str));
+      const index = orderLevelDate.findIndex((pattern) => pattern.test(str));
       return index;
     };
 
-    sortingArr.sort((a, b) => {
+    arr.sort((a, b) => {
       const aLevel = getLevel(a.date.charAt(0));
       const bLevel = getLevel(b.date.charAt(0));
+      // NOTE: 내림 차순 정렬
       if (aLevel === bLevel) return a.date.charCodeAt(0) - b.date.charCodeAt(0);
       return bLevel - aLevel;
-      // NOTE: 내림 차순 정렬
+      // NOTE: 오름 차순 정렬
+      // if (aLevel === bLevel) return b.date.charCodeAt(0) - a.date.charCodeAt(0);
+      // return aLevel - bLevel;
     });
 
-    return sortingArr.sort((a, b) => {
+    arr.sort((a, b) => {
       const aDate = new Date(a.date);
       const bDate = new Date(b.date);
       return Number(bDate) - Number(aDate);
+      // return Number(aDate) - Number(bDate);
       // NOTE: 날짜순 정렬
     });
+
+    return setSortingArr(arr);
   };
 
   const [sortState, setSortState] = useState<tagType>("all");
+  const [isSortDate, setIsSortDate] = useState(true);
+  const [isSortAlphabet, setIsSortAlphabet] = useState(true);
 
   const errorMsg = () => {
     return (
@@ -71,14 +81,21 @@ export const DailyDatasList: FC<PropTypes> = ({
     );
   };
 
+  // useEffect(() => {
+  //   sortGrouping(isSortDate, isSortAlphabet);
+  // }, [isSortDate, isSortAlphabet]);
+
   useEffect(() => {
     if (sortingArr.length) {
       setIsArray(true);
     } else {
       setIsArray(false);
     }
-    if (isArray) setSortingArr(sortGroupString);
-  }, [sortingArr, dailyDatas, sortGroupString, sortState]);
+  }, [sortingArr, dailyDatas]);
+
+  useEffect(() => {
+    if (isArray) sortGrouping();
+  }, [sortingArr, dailyDatas, isArray]);
 
   if (!mounted || !isLoaded) {
     return (
@@ -100,6 +117,12 @@ export const DailyDatasList: FC<PropTypes> = ({
           그간의 기록들
         </Title>
         <CardCategories setSortState={setSortState} selectedTag={sortState} />
+        {/* <button onClick={() => setIsSortDate(!isSortDate)}>
+          {isSortDate ? "최신순" : "오래된 날짜부터"}
+        </button>
+        <button onClick={() => setIsSortAlphabet(!isSortAlphabet)}>
+          {isSortAlphabet ? "가나다순" : "글자 역순"}
+        </button> */}
         <section css={styles.cardsBlock}>
           {isArray
             ? sortingArr
