@@ -65,6 +65,7 @@ export const DailyDatasList: FC<PropTypes> = ({
 
     return setSortingArr(arr);
   };
+  console.log(sortingArr);
 
   const [sortState, setSortState] = useState<tagType>("all");
   const [isSortDate, setIsSortDate] = useState(true);
@@ -131,26 +132,26 @@ export const DailyDatasList: FC<PropTypes> = ({
                   if (sortState === "all") return dailyData;
                   return dailyData.sort === sortState;
                 })
-                // NOTE: 키워드 검색
-                .filter((dailyData) => {
-                  if (keyword !== "") {
-                    // NOTE: title에 키워드가 있을 경우 가장 먼저 반환
-                    dailyData.title
-                      .toLowerCase()
-                      .includes(keyword.toLowerCase()) && dailyData.title;
-                    // NOTE: 그 다음으로 comment에 키워드가 있다면 반환
-                    dailyData.comment
-                      .toLowerCase()
-                      .includes(keyword.toLowerCase()) && dailyData.comment;
-                    // NOTE: 그 다음으로 date에 키워드가 있다면 반환
-                    dailyData.date
-                      .toLowerCase()
-                      .includes(keyword.toLowerCase()) && dailyData.date;
-                    // NOTE: 키워드를 입력 후 해당하는 키워드가 없다면 아무것도 반환하지 않음
-                  } else {
-                    return dailyData;
-                  }
-                })
+                // // NOTE: 키워드 검색
+                // .filter((dailyData) => {
+                //   if (keyword !== "") {
+                //     // NOTE: title에 키워드가 있을 경우 가장 먼저 반환
+                //     dailyData.title
+                //       .toLowerCase()
+                //       .includes(keyword.toLowerCase()) && dailyData.title;
+                //     // NOTE: 그 다음으로 comment에 키워드가 있다면 반환
+                //     dailyData.comment
+                //       .toLowerCase()
+                //       .includes(keyword.toLowerCase()) && dailyData.comment;
+                //     // NOTE: 그 다음으로 date에 키워드가 있다면 반환
+                //     dailyData.date
+                //       .toLowerCase()
+                //       .includes(keyword.toLowerCase()) && dailyData.date;
+                //     // NOTE: 키워드를 입력 후 해당하는 키워드가 없다면 아무것도 반환하지 않음
+                //   } else {
+                //     return dailyData;
+                //   }
+                // })
                 .map((item: DailyDataItemType) => (
                   <DailyDataCard
                     item={item}

@@ -25,7 +25,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main css={styles.global}>
-        <SearchDailyDatas keyword={keyword} setKeyword={setKeyword} />
+        {/* <SearchDailyDatas keyword={keyword} setKeyword={setKeyword} /> */}
         <Centering _css={styles.mqCentering}>
           <div css={styles.mqWrap}>
             <AddNewDailyData sortingArr={sortingArr} />
