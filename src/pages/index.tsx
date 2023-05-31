@@ -21,8 +21,8 @@ export default function Home() {
       <Head>
         <title>Daily pieces App</title>
         <meta name="description" content="Daily pieces App" />
+        <meta name="theme-color" content="#5f9ea0" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <main css={styles.global}>
         {/* <SearchDailyDatas keyword={keyword} setKeyword={setKeyword} /> */}
