@@ -9,6 +9,7 @@ import { DailyDatasList } from "@/components/organisms/DailyDatasList";
 import { useDailyDatas } from "@/helpers/hooks/useDailyDatas";
 import Centering from "@/components/templates/Centering";
 import { DailyDataItemType } from "@/helpers/common/DataTypes";
+import { UserName } from "@/components/atoms/UserName";
 
 export default function Home() {
   type keywordType = string;
@@ -27,6 +28,7 @@ export default function Home() {
       <main css={styles.global}>
         {/* <SearchDailyDatas keyword={keyword} setKeyword={setKeyword} /> */}
         <Centering _css={styles.mqCentering}>
+          <UserName userName="example" onChange={() => {}} />
           <div css={styles.mqWrap}>
             <AddNewDailyData sortingArr={sortingArr} />
             <DailyDatasList
@@ -59,7 +61,6 @@ const styles = {
     }
   `,
   mqWrap: css`
-    margin-top: 70px;
     ${mediaQueries("md")} {
       display: flex;
       justify-content: space-between;
